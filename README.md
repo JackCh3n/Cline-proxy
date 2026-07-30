@@ -85,16 +85,30 @@ Model:    cline-free/glm-5.2
 
 后台 **设置** → **请求头** 可编辑转发给上游的自定义请求头（如 `x-client-type: cline-cli`）。
 
-## 可用模型
+## 可用模型（实测）
 
-| 模型 ID | 说明 |
-|---------|------|
-| `cline-free/glm-5.2` | 免费模型 |
-| `cline-pass/glm-5.2` | 付费模型 |
-| `cline-pass/deepseek-v4-flash` | 付费模型，速度快 |
-| `cline-pass/qwen3.7-max` | 付费模型 |
+### 消耗账户额度
 
-可在后台 **设置** → **默认模型** 中修改。
+| 模型 ID | 状态 | 说明 |
+|---------|:----:|------|
+| `deepseek/deepseek-v4-pro` | ✅ 可用 · 消耗额度 | DeepSeek V4 Pro |
+| `openai/gpt-4.1-nano` | ✅ 可用 · 消耗额度 | GPT-4.1 Nano |
+| `qwen/qwen3-235b-a22b` | ✅ 可用 · 消耗额度 | Qwen3 235B |
+| `meta-llama/llama-4-maverick` | ✅ 可用 · 消耗额度 | Llama 4 Maverick |
+| `deepseek/deepseek-v4-flash` | ⚠️ 响应为空 · 消耗额度 | API 返回 200 但内容为空 |
+| `google/gemini-2.5-flash` | ⚠️ 响应为空 · 消耗额度 | API 返回 200 但内容为空 |
+| `google/gemini-2.5-pro` | ⚠️ 响应为空 · 消耗额度 | API 返回 200 但内容为空 |
+
+### 不消耗账户额度
+
+| 模型 ID | 状态 | 说明 |
+|---------|:----:|------|
+| `cline-free/glm-5.2` | ✅ 可用 · 不消耗额度 | 免费模型，无限使用 |
+| `cline-pass/glm-5.2` | ❌ 403 · 不消耗额度 | 需要 `cline-pass` 订阅 |
+| `cline-pass/deepseek-v4-flash` | ❌ 403 · 不消耗额度 | 需要 `cline-pass` 订阅 |
+| `cline-pass/qwen3.7-max` | ❌ 403 · 不消耗额度 | 需要 `cline-pass` 订阅 |
+
+可在后台 **设置** → **默认模型** 中修改默认模型。
 
 ## 项目结构
 
@@ -111,4 +125,8 @@ Model:    cline-free/glm-5.2
 ├── Dockerfile          Docker 构建
 ├── docker-compose.yml  Docker Compose 配置
 └── override.md         可选的系统提示词覆盖文件
+
+---
+
+感谢 [LINUX DO](https://linux.do) 社区
 ```
