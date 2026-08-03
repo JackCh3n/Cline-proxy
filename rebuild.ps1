@@ -23,6 +23,12 @@
 .EXAMPLE
     .\rebuild.ps1 -NoStart
     Stop running proxy, rebuild only
+.EXAMPLE
+    .\rebuild.ps1 -NoOpenBrowser
+    Rebuild and start, but do not open browser
+.EXAMPLE
+    .\rebuild.ps1 -Port 3458 -NoOpenBrowser
+    Rebuild on port 3458 without opening browser
 #>
 [CmdletBinding()]
 param(
@@ -30,6 +36,7 @@ param(
     [string]$OutputDir = "",
     [string]$Ldflags = "-s -w",
     [switch]$NoStart,
+    [switch]$NoOpenBrowser,
     [string]$ProcessName = "cline-proxy*"
 )
 
@@ -142,6 +149,17 @@ try {
         Write-Host "[WARN] Process exited immediately with code $($started.ExitCode)" -ForegroundColor Red
     } else {
         Write-Host "  Started pid=$($started.Id)" -ForegroundColor Green
+        # Open browser
+        if (-not $NoOpenBrowser) {
+            $adminUrl = "http://127.0.0.1:$Port/admin/"
+            Start-Sleep -Milliseconds 500
+            try {
+                Start-Process $adminUrl
+                Write-Host "  Browser opened: $adminUrl" -ForegroundColor Green
+            } catch {
+                Write-Host "  [INFO] Failed to open browser: $($_.Exception.Message)" -ForegroundColor DarkGray
+            }
+        }
     }
 } catch {
     Write-Host "[ERROR] Failed to start: $($_.Exception.Message)" -ForegroundColor Red
