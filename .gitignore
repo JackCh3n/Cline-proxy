@@ -17,3 +17,6 @@ override.md
 
 # Logs
 *.log
+
+# Local tools / workbuddy memory
+.workbuddy/
