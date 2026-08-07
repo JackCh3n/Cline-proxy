@@ -91,7 +91,7 @@ jobs:
       - name: Generate release tag
         id: tag
         run: |
-          TAG="v$(date +%Y_%m%d_%H%M)"
+          TAG="v$(date +%Y_%m%d)"
           echo "tag=$TAG" >> $GITHUB_OUTPUT
           echo "Generated tag: $TAG"
 
