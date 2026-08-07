@@ -88,21 +88,12 @@ jobs:
           path: artifacts
           pattern: cline-proxy-*
 
-      - name: Generate semantic release tag
+      - name: Generate release tag
         id: tag
         run: |
-          set -euo pipefail
-          git fetch --tags --force
-          LATEST=$(git tag --list 'v*' --sort=-version:refname | grep -E '^v[0-9]+\.[0-9]+\.[0-9]+$' | head -n 1 || true)
-          if [ -z "$LATEST" ]; then
-            TAG="v0.0.1"
-          else
-            VERSION="${LATEST#v}"
-            IFS='.' read -r MAJOR MINOR PATCH <<< "$VERSION"
-            TAG="v${MAJOR}.${MINOR}.$((PATCH + 1))"
-          fi
+          TAG="v$(date +%Y_%m%d_%H%M)"
           echo "tag=$TAG" >> $GITHUB_OUTPUT
-          echo "Generated semantic version: $TAG"
+          echo "Generated tag: $TAG"
 
       - name: Create Release
         uses: softprops/action-gh-release@v2

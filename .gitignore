@@ -14,3 +14,6 @@ cline-proxy-*
 .cline-accounts.json
 data/
 override.md
+
+# Logs
+*.log

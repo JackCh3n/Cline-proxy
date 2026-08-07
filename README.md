@@ -14,7 +14,7 @@ Cline API 的反向代理服务，支持多账号轮询、OpenAI 和 Anthropic M
 - **账号冷却与自动恢复**：命中 429 `INFERENCE_CAP_ERROR` 时自动解析 "Try again in 17h 59m" 并标记冷却，冷却到期自动恢复，账号列表显示预计恢复时间
 - **账号测试**：后台账号管理提供「⚡测试」按钮，对单个账号发起真实探测请求，验证是否可用；测试成功会清除冷却/过期状态（相当于升级版重置），失败会按上游返回的等待时长标记冷却
 - **本地调用统计**：账号列表明确显示「本地今日/累计调用」，统计代理转发成功（上游 HTTP 200）的实际调用；跨日自动重置今日调用；「↻重置」按钮仅重置本地今日调用。该数字不是 Cline 官方免费额度，官方每日额度不公开精确次数。
-- **多平台 CI/CD**：GitHub Actions 自动构建，推送代码到 main 即触发，生成 Windows (amd64/arm64)、Linux (amd64/arm64)、macOS (amd64/arm64) 共 6 个平台二进制，版本从 `v0.0.1` 开始，之后每次自动递增补丁版本
+- **多平台 CI/CD**：GitHub Actions 自动构建，推送代码到 main 即触发，生成 Windows (amd64/arm64)、Linux (amd64/arm64)、macOS (amd64/arm64) 共 6 个平台二进制，发布标题格式为 `v年_月日_时分`（如 `v2026_0807_1606`）
 
 ## 快速开始
 
@@ -134,7 +134,7 @@ Model:    deepseek/deepseek-v4-flash
 
 ## CI/CD
 
-Release 版本号以 `v` 开头，从 `v0.0.1` 开始按语义版本递增：首次发布为 `v0.0.1`，后续推送自动发布 `v0.0.2`、`v0.0.3` 等版本。
+Release 版本号格式为 `v年_月日_时分`（如 `v2026_0807_1606`），每次推送自动生成，标题与标签保持一致。
 
 ## 项目结构
 
@@ -149,6 +149,8 @@ Release 版本号以 `v` 开头，从 `v0.0.1` 开始按语义版本递增：首
 ├── types.go              数据结构定义
 ├── capture.go            OAuth 信息捕获工具
 ├── http.go               HTTP 客户端与工具函数
+├── build.ps1             多平台交叉编译脚本
+├── rebuild.ps1           重建并重启脚本（开发热更新）
 ├── Dockerfile            Docker 构建配置
 ├── docker-compose.yml    Docker Compose 配置
 ├── go.mod                Go 模块定义
